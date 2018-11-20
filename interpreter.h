@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <unordered_map>
 #include "storytokenizer.h"
@@ -14,6 +15,7 @@ class Interpreter
         Interpreter(StoryTokenizer st);
         void run(string str);
         void run(int index);
+        void run();
         int findIndex(string name);
         void updateVar(string name, bool val);
         bool getVal(string name);
