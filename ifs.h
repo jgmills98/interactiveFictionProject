@@ -1,21 +1,25 @@
-#ifndef BLOCK_H
-#define BLOCK_H
+#ifndef IFS_H
+#define IFS_H
 
 #include "section.h"
 
-enum IF_TYPE {IF,ELSE_IF,ELSE};
+enum IF_TYPE {IFE,ELSE_IFE,ELSEE};
 
 class Ifs : public Section
 {
     private:
         IF_TYPE ifType;
         string varname;
-        int value;
+        bool value;
+        string statement; //holds the passage to be executed in if statement
+
     public:
         Ifs(string str);
         void execute();
         string getVar();
-        int getVal();
+        string getStatement();
+        bool getVal();
+        IF_TYPE getType();
 
 };
 
