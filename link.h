@@ -1,5 +1,5 @@
-#ifndef BLOCK_H
-#define BLOCK_H
+#ifndef LINK_H
+#define LINK_H
 
 #include "section.h"
 

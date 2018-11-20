@@ -4,7 +4,6 @@
 
 Link::Link(string str)
     :Section(str)
-
 {
 
     int pos = str.find("-&gt");
@@ -22,4 +21,14 @@ Link::Link(string str)
         for(int i = pos+5; i< str.size()-2;i++)
             lpassage += str[i];
     }
+}
+
+string Link::getText()
+{
+    return dispText;
+}
+
+string Link::getPassage()
+{
+    return lpassage;
 }
