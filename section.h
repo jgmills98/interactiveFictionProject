@@ -12,6 +12,7 @@ class Section
     public:
         Section(string str) : text(str) {};
         void execute();
+        string getText(){return text;};
 
 };
 
