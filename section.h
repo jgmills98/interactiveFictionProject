@@ -2,6 +2,7 @@
 #define SECTION_H
 
 #include <string>
+#include "interpreter.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ class Section
         string text;
     public:
         Section(string str) : text(str) {};
-        void execute();
+        void execute(Interpreter* ins);
         string getText(){return text;};
 
 };

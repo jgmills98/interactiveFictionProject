@@ -15,7 +15,7 @@ class Ifs : public Section
 
     public:
         Ifs(string str);
-        void execute();
+        void execute(Interpreter* ins);
         string getVar();
         string getStatement();
         bool getVal();

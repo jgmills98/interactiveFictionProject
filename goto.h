@@ -9,7 +9,7 @@ class Goto : public Section
         string gpassage;
     public:
         Goto(string str);
-        void execute();
+        void execute(Interpreter* ins);
         string getPassage();
 
 

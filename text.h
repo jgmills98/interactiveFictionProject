@@ -10,7 +10,8 @@ class Text : public Section
 {
     public:
         Text(string str);
-        void execute();
+        void execute(Interpreter* ins);
+
 
 };
 

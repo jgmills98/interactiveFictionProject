@@ -10,7 +10,7 @@ class Link : public Section
         string lpassage;
     public:
         Link(string str);
-        void execute();
+        void execute(Interpreter* ins);
         string getPassage();
         string getText();
 
