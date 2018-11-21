@@ -24,10 +24,11 @@ void Interpreter::run()
     int i = 0;
     int pos = 0;
 
-    while(i < passages.size())
-    {
-    
-    }
+    // while(i < passages.size())
+    // {
+    //     PassageTokenizer pt(passages[i].getText());
+
+    // }
 }
 
 

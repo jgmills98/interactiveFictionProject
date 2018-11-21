@@ -87,7 +87,7 @@ SectionToken PassageTokenizer::nextSection()
     if (nextelse < nexttok)
       nexttok = nextelse;
 
-    end = string::npos;
+    end = -1;
     lastsect = TEXT;
     if (nexttok > pos)
       end = nexttok;
