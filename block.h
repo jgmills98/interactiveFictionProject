@@ -9,7 +9,7 @@ class Block : public Section
         string textPassage;
     public:
         Block(string str);
-        void executre();
+        void execute();
         string getText();
 
 };
