@@ -1,5 +1,5 @@
-#ifndef BLOCK_H
-#define BLOCK_H
+#ifndef GOTO_H
+#define GOTO_H
 
 #include "section.h"
 
@@ -9,7 +9,7 @@ class Goto : public Section
         string gpassage;
     public:
         Goto(string str);
-        void executre();
+        void execute();
         string getPassage();
 
 
