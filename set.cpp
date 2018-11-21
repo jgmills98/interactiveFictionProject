@@ -12,12 +12,21 @@ Set::Set(string str)
         varname += str[i];
     
     pos = str.find("to ");
-    for(int i = pos + 3; i < str.size()-1;i++)
+    for(int i = pos + 3; i < str.size();i++)
         val += str[i];
     if(val == "true")
         value = true;
     else
         value = false;
+    
+}
+
+void Set::execute(Interpreter* ins)
+{
+    if(ins->vars.find(varname) == ins->vars.end())   
+        ins->vars.emplace(varname,value);
+    else
+        ins->vars[varname] = value;
     
 }
 

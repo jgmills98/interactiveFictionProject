@@ -10,7 +10,7 @@ class Set : public Section
         bool value;
     public:
         Set(string str);
-        void execute();
+        void execute(Interpreter* ins);
         string getVar();
         bool getVal();
 };
