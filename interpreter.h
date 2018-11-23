@@ -8,10 +8,11 @@ using namespace std;
 class Interpreter
 {
     private:
-        vector<PassageToken> passages;
-        unordered_map<string,bool> vars;
-        unordered_map<string,int> pass_index;
+        int pos = 0;
     public:
+        unordered_map<string,int> pass_index;
+        unordered_map<string,bool> vars;
+        vector<PassageToken> passages;
         Interpreter(StoryTokenizer st);
         void run(string str);
         void run(int index);
@@ -19,5 +20,7 @@ class Interpreter
         int findIndex(string name);
         void updateVar(string name, bool val);
         bool getVal(string name);
+        int getPos() {return pos;};
+        void setPos(int x) {pos = x;};
 
 };
