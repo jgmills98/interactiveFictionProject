@@ -13,6 +13,11 @@ Goto::Goto(string str)
 
 }
 
+void Goto::execute(Interpreter* ins)
+{
+	ins->setPos(ins->pass_index[gpassage]);
+}
+
 
 string Goto::getPassage()
 {
