@@ -12,7 +12,7 @@ Set::Set(string str)
         varname += str[i];
     
     pos = str.find("to ");
-    for(int i = pos + 3; i < str.size();i++)
+    for(int i = pos + 3; i < str.size()-1;i++)
         val += str[i];
     if(val == "true")
         value = true;
