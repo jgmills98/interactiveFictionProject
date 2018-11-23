@@ -15,9 +15,7 @@ Link::Link(const string& str)
     else
     {
         dispText = str.substr(2,str.size()-pos+1);
-
-        lpassage = str.substr(pos+5,str.size()-pos-7);
-        
+        lpassage = str.substr(pos+5,str.size()-pos-7);  
     }
     
 }

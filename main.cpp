@@ -23,7 +23,6 @@ int main()
     StoryTokenizer st(story);
 
     Interpreter  intp(st);    
-
     intp.run();
 
     return 0;

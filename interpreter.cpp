@@ -17,7 +17,7 @@ using namespace std;
 
 Interpreter::Interpreter(StoryTokenizer st)
 {
-    
+    //loops through all passages to add PassageTokens to the map and vector
     while(st.hasNextPassage())
     {
         PassageToken ptok = st.nextPassage();
@@ -29,22 +29,21 @@ Interpreter::Interpreter(StoryTokenizer st)
 
 void Interpreter::run()
 {
-    int i = 0;
-    string linkChoices;
-    int hitLink = 0;
+    string linkChoices;//string that stores all links that will be printed at the end of the passage
+    int hitLink; //used to check if there are any links in the Passage
+    int finished = 0; //allows 1 more pass through once at the end of the game
 
-    while(pos < passages.size())
+    while(finished == 0) //loops while through passages while remaining within bounds
     {
-        hitLink = 0;
-        int altered = 0;
-
-        vector<Link> links;
-        queue<Ifs> ifBlocks;
-
-        PassageToken pt(passages[pos].getText());
-        pt.setName(passages[pos].getName());
+        if(passages[pos].getName() == passages[passages.size()-1].getName())
+            finished = 1;
         
-        PassageTokenizer ptok(pt.getText());
+        hitLink = 0;//default to 0 until a link is found
+
+        vector<Link> links;//vector used to store all links found in each passage
+        queue<Ifs> ifBlocks;//queue used to store each if statement block. queue in order to follow first in first out 
+
+        PassageTokenizer ptok(passages[pos].getText()); //uses the passage vector for the tokenizer
 
         while(ptok.hasNextSection())
         {
@@ -116,6 +115,7 @@ void Interpreter::run()
             cout << "\n" << linkChoices << endl;
             string choice;
             getline(cin,choice);
+            cout << endl;
 
             for(int i = 0; i < links.size(); i++)
             {
@@ -126,9 +126,6 @@ void Interpreter::run()
                 }
             }
         }
-
-        if(pt.getName() == passages[passages.size()-1].getName())
-            break;
 
     }
 }
