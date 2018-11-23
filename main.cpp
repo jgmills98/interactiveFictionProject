@@ -22,15 +22,9 @@ int main()
     }
     StoryTokenizer st(story);
 
-    // // PassageToken ptok = st.nextPassage();
-    Interpreter  intp(st);
+    Interpreter  intp(st);    
 
     intp.run();
-    // Set test("(set: $facebook to true)");
-    // cout << intp.vars["facebook"] << endl;
-    // test.execute(&intp);
-    // cout << intp.vars["facebook"] << endl;
-
 
     return 0;
 }

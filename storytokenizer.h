@@ -37,6 +37,7 @@ public:
   PassageToken(const string& n, const string& p) : name(n), pass(p) {}
   const string& getName() const {return name;}
   const string& getText() const {return pass;}
+  void setName(string str) {name = str;}
 };
 
 class SectionToken
