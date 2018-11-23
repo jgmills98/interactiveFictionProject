@@ -1,12 +1,13 @@
 #include <iostream>
 #include <string>
 #include "storytokenizer.h"
-#include "interpreter.h"
+// #include "interpreter.h"
 
 #include "set.h" //remove later, used to test constructors
 #include "section.h"
 #include "link.h"
 #include "ifs.h"
+#include "text.h"
 
 using namespace std;
 
@@ -21,13 +22,14 @@ int main()
     }
     StoryTokenizer st(story);
 
-    // PassageToken ptok = st.nextPassage();
+    // // PassageToken ptok = st.nextPassage();
     Interpreter  intp(st);
 
-    Ifs test("(else:)[??????]");
-    cout << test.getVar() << endl;
-    cout << test.getVal() << endl;
-    cout << test.getStatement() << endl;
+    intp.run();
+    // Set test("(set: $facebook to true)");
+    // cout << intp.vars["facebook"] << endl;
+    // test.execute(&intp);
+    // cout << intp.vars["facebook"] << endl;
 
 
     return 0;
