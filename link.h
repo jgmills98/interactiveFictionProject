@@ -9,7 +9,7 @@ class Link : public Section
         string dispText;
         string lpassage;
     public:
-        Link(string str);
+        Link(const string& str);
         void execute(Interpreter* ins);
         string getPassage();
         string getText();
