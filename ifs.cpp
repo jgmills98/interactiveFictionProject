@@ -1,8 +1,14 @@
 #include <string>
+#include <queue>
 
+#include "block.h"
+#include "goto.h"
 #include "ifs.h"
+#include "link.h"
+#include "set.h"
+#include "text.h"
 
-Ifs::Ifs(string str)
+Ifs::Ifs(string str,string str1)
     :Section(str)
 {
 
@@ -31,23 +37,105 @@ Ifs::Ifs(string str)
         value = false;
     }
     
+    statement = str1.substr(1,str1.size()-2);
 
-    int i = str.find(")[")+2;
-    int init = i;
-    int brackets = 1;
-    
-    while(brackets != 0 && i < str.size()-1)
+}
+
+void Ifs::execute(Interpreter* ins)
+{
+    vector<Link> links;
+    string linkChoices;
+    int hitLink = 0;
+
+    if(((ifType == IFE || ifType == ELSE_IFE) && ins->vars[varname] == value) || ifType == ELSEE)
     {
+        queue<Ifs> ifBlocks;
         
-        if(str[i] == '[' && i != init)
-            brackets++;
+        complete = 1;
+        PassageTokenizer ptok(statement);
+        
+        while(ptok.hasNextSection())
+        {
+            SectionToken stok = ptok.nextSection();
+            if(stok.getType() == IF || stok.getType() == ELSEIF || stok.getType() == ELSE)
+            {
+                string copy = stok.getText();
 
-        if(str[i] == ']')
-            brackets--;
-        
-        statement += str[i];
-        i++;
+                stok = ptok.nextSection();
+
+                Ifs ifs(copy,stok.getText());
+
+                ifBlocks.push(ifs);
+
+                stok = ptok.nextSection();
+                while(stok.getType() == ELSE || stok.getType() == ELSEIF)
+                {
+                    copy = stok.getText();
+
+                    stok = ptok.nextSection();
+
+                    Ifs extra(copy,stok.getText());
+                    ifBlocks.push(extra);
+                }
+
+                while(!ifBlocks.empty())
+                {
+                    ifBlocks.front().execute(ins);
+                    
+                    if(ifBlocks.front().getComplete() == 1)
+                    {
+                        while(!ifBlocks.empty())
+                            ifBlocks.pop();
+                    }
+                    else
+                    {
+                        ifBlocks.pop();
+                    }
+                }
+            }
+           else if(stok.getType() == SET)
+            {
+                Set st(stok.getText());
+                st.execute(ins);
+            }
+            else if(stok.getType() == TEXT)
+            {
+                Text tx(stok.getText());
+                tx.execute(ins);
+            }
+            else if(stok.getType() == LINK)
+            {
+                Link link(stok.getText());
+
+                links.push_back(link);
+                cout << "\"" << link.getText() << "\";";
+                linkChoices += "\"" + link.getText() + "\";\n";
+                hitLink = 1;
+
+            }
+            else if(stok.getType() == GOTO)
+            {
+                Goto gt(stok.getText());
+                gt.execute(ins);
+                break;
+            }
+        }
     }
+    // else if(ifType == ELSEE)
+    // {
+    //     complete = 1;
+    //     PassageTokenizer ptok(statement);
+
+    //     while(ptok.hasNextSection())
+    //     {
+    //         SectionToken stok = ptok.nextSection();
+    //         if(stok.getType() == TEXT)
+    //         {
+    //             Text tx(stok.getText());
+    //             tx.execute(ins);
+    //         }
+    //     }
+    // }
 
 }
 
