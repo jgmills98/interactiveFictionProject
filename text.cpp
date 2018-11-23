@@ -5,3 +5,8 @@ Text::Text(string str)
 {
 
 }
+
+void Text::execute(Interpreter* ins)
+{
+    cout << getText();
+}
