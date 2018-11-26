@@ -1,3 +1,6 @@
+#ifndef __INTERPRETER_H
+#define __INTERPRETER_H
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -24,3 +27,4 @@ class Interpreter
         void setPos(int x) {pos = x;};
 
 };
+#endif
