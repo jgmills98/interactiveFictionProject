@@ -17,7 +17,7 @@ int main()
     string line, story;
 
 	ifstream in;
-	in.open("if.html"); //Change file name to test diferent files
+	in.open("if.html"); //Change file name to test diferent stories
 	if (!in.is_open())
 	{
 		cout << "Could not open file" << endl;
