@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "storytokenizer.h"
 #include "interpreter.h"
 /*
@@ -14,12 +15,22 @@ using namespace std;
 int main()
 {
     string line, story;
-    getline(cin, line);
-    while (cin && line != "</html>")
+
+	ifstream in;
+	in.open("if.html"); //Change file name to test diferent files
+	if (!in.is_open())
+	{
+		cout << "Could not open file" << endl;
+		return 1;
+	}
+
+    getline(in, line);
+    while (in && line != "</html>")
     {
         story += line + '\n';
-        getline(cin, line);
+        getline(in, line);
     }
+	in.close();
     StoryTokenizer st(story);
 
     Interpreter  intp(st);    
