@@ -3,6 +3,7 @@
 
 #include "section.h"
 
+class Interpreter;
 class Link : public Section
 {
     private:

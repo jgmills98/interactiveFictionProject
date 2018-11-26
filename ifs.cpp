@@ -43,10 +43,7 @@ Ifs::Ifs(string str,string str1)
 
 void Ifs::execute(Interpreter* ins)
 {
-    vector<Link> links;
-    string linkChoices;
-    int hitLink = 0;
-
+   
     if(((ifType == IFE || ifType == ELSE_IFE) && ins->vars[varname] == value) || ifType == ELSEE)
     {
         queue<Ifs> ifBlocks;
@@ -105,12 +102,11 @@ void Ifs::execute(Interpreter* ins)
             }
             else if(stok.getType() == LINK)
             {
-                Link link(stok.getText());
+				Link* link = new Link(stok.getText());
+				cout << link->getText();
+				ins->links.push_back(link);
 
-                links.push_back(link);
-                cout << "\"" << link.getText() << "\";";
-                linkChoices += "\"" + link.getText() + "\";\n";
-                hitLink = 1;
+                ins->hitLink = 1;
 
             }
             else if(stok.getType() == GOTO)

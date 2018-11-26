@@ -6,8 +6,10 @@
 #include <unordered_map>
 #include "storytokenizer.h"
 
-using namespace std;
 
+
+using namespace std;
+class Link;
 class Interpreter
 {
     private:
@@ -16,10 +18,12 @@ class Interpreter
         unordered_map<string,int> pass_index;
         unordered_map<string,bool> vars;
         vector<PassageToken> passages;
+		vector<Link*> links;
         Interpreter(StoryTokenizer st);
         void run(string str);
         void run(int index);
         void run();
+		int hitLink;
         int findIndex(string name);
         void updateVar(string name, bool val);
         bool getVal(string name);

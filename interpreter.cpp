@@ -25,25 +25,23 @@ Interpreter::Interpreter(StoryTokenizer st)
         passages.push_back(ptok);
 
     }
+	hitLink = 0;
 }
 
 void Interpreter::run()
 {
-    int hitLink; //used to check if there are any links in the Passage
     int finished = 0; //allows 1 more pass through once at the end of the game
 
     while(finished == 0) //loops while through passages while remaining within bounds
     {
-        if(passages[pos].getName() == passages[passages.size()-1].getName())
+        
+		if(passages[pos].getName() == passages[passages.size()-1].getName())
             finished = 1;
         
-        hitLink = 0;//default to 0 until a link is found
-
-        vector<Link> links;//vector used to store all links found in each passage
         queue<Ifs> ifBlocks;//queue used to store each if statement block. queue in order to follow first in first out 
 
         PassageTokenizer ptok(passages[pos].getText()); //uses the passage vector for the tokenizer
-
+		
         while(ptok.hasNextSection())
         {
 
@@ -94,10 +92,10 @@ void Interpreter::run()
             }
             else if(stok.getType() == LINK)
             {
-                Link link(stok.getText());
-
+                Link* link = new Link(stok.getText());
+				cout << link->getText();
                 links.push_back(link);
-                cout << link.getText();
+				
                 hitLink = 1;
             }
             else if(stok.getType() == GOTO)
@@ -115,7 +113,7 @@ void Interpreter::run()
 			
 			for (int i = 0; i < links.size(); i++)
 			{
-				cout << i + 1 << ". " << links[i].getText() << endl;
+				cout << i + 1 << ". " << links[i]->getText() << endl;
 				choicecount++;
 			}
             int choice;
@@ -129,7 +127,9 @@ void Interpreter::run()
 				cin >> choice;
 			}
             
-			links[choice - 1].execute(this);
+			links[choice - 1]->execute(this);
+			hitLink = 0;
+			links.clear();
         }
 
     }
