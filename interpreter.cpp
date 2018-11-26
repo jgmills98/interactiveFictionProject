@@ -29,7 +29,6 @@ Interpreter::Interpreter(StoryTokenizer st)
 
 void Interpreter::run()
 {
-    string linkChoices;//string that stores all links that will be printed at the end of the passage
     int hitLink; //used to check if there are any links in the Passage
     int finished = 0; //allows 1 more pass through once at the end of the game
 
@@ -98,8 +97,7 @@ void Interpreter::run()
                 Link link(stok.getText());
 
                 links.push_back(link);
-                cout << "\"" << link.getText() << "\";";
-                linkChoices += "\"" + link.getText() + "\";\n";
+                cout << link.getText();
                 hitLink = 1;
             }
             else if(stok.getType() == GOTO)
@@ -112,19 +110,26 @@ void Interpreter::run()
 
         if(hitLink == 1)
         {
-            cout << "\n" << linkChoices << endl;
-            string choice;
-            getline(cin,choice);
-            cout << endl;
-
-            for(int i = 0; i < links.size(); i++)
-            {
-                if(choice == links[i].getText())
-                {
-                    links[i].execute(this);
-                    linkChoices = "";
-                }
-            }
+			int choicecount = 0;
+			cout << "\n";
+			
+			for (int i = 0; i < links.size(); i++)
+			{
+				cout << i + 1 << ". " << links[i].getText() << endl;
+				choicecount++;
+			}
+            int choice;
+			cin >> choice;
+			
+			while (!cin || choice < 1 || choice > choicecount)
+			{
+				cout << "Invalid Choice, Re-enter a number between 1 and " << choicecount << ": ";
+				cin.clear();
+				cin.ignore(10000, '\n');
+				cin >> choice;
+			}
+            
+			links[choice - 1].execute(this);
         }
 
     }
