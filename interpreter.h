@@ -24,6 +24,7 @@ class Interpreter
         void run(int index);
         void run();
 		int hitLink;
+		int hitGoto;
         int findIndex(string name);
         void updateVar(string name, bool val);
         bool getVal(string name);

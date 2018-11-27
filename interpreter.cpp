@@ -34,10 +34,15 @@ void Interpreter::run()
 
     while(finished == 0) //loops while through passages while remaining within bounds
     {
-        
+        /*
 		if(passages[pos].getName() == passages[passages.size()-1].getName())
             finished = 1;
-        
+        */
+		
+		hitLink = 0;
+		hitGoto = 0;
+		links.clear();
+
         queue<Ifs> ifBlocks;//queue used to store each if statement block. queue in order to follow first in first out 
 
         PassageTokenizer ptok(passages[pos].getText()); //uses the passage vector for the tokenizer
@@ -102,14 +107,22 @@ void Interpreter::run()
             {
                 Goto gt(stok.getText());
                 gt.execute(this);
+				hitGoto = 1;
                 break;
             }
+
+			if (hitGoto == 1)
+				break;
         }
+
+		//Ends Program if passage with no Links or Gotos is ran
+		if ((hitLink == 0) && (hitGoto == 0))
+			finished = 1;
 
         if(hitLink == 1)
         {
 			int choicecount = 0;
-			cout << "\n";
+			cout << "\n"<< endl;
 			
 			for (int i = 0; i < links.size(); i++)
 			{
@@ -128,8 +141,7 @@ void Interpreter::run()
 			}
             
 			links[choice - 1]->execute(this);
-			hitLink = 0;
-			links.clear();
+			
         }
 
     }

@@ -113,6 +113,7 @@ void Ifs::execute(Interpreter* ins)
             {
                 Goto gt(stok.getText());
                 gt.execute(ins);
+				ins->hitGoto = 1;
                 break;
             }
         }
