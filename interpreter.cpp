@@ -50,6 +50,7 @@ void Interpreter::run()
 			
 			SectionToken stok(ptok.nextSection());
 			
+            //checks if the current section is an if/elseif/else and finds its block
 			if (stok.getType() == IF || stok.getType() == ELSEIF || stok.getType() == ELSE)
 			{
 				string copy = stok.getText();
@@ -58,7 +59,7 @@ void Interpreter::run()
 				ifBlocks.push(ifs);
 
 				stok = ptok.nextSection();
-			
+                //if there are any elseif/else related to the previous if statement, that gets added to the queue as well
 				while (stok.getType() == ELSE || stok.getType() == ELSEIF)
 				{
 					copy = stok.getText();
@@ -73,9 +74,9 @@ void Interpreter::run()
 				
                 while(!ifBlocks.empty())
                 {
-                    ifBlocks.front().execute(this);
+                    ifBlocks.front().execute(this);//executes the front if statement
                     
-                    if(ifBlocks.front().getComplete() == 1)
+                    if(ifBlocks.front().getComplete() == 1)//if that executes properly, removes the other elseifs or else from the queue
                     {
                         while(!ifBlocks.empty())
                             ifBlocks.pop();
@@ -157,7 +158,7 @@ void Interpreter::run()
 			int choicecount = 0;
 			cout << "\n"<< endl;
 			
-			for (int i = 0; i < links.size(); i++)
+			for (int i = 0; i < links.size(); i++) //prints ll the link choices
 			{
 				cout << i + 1 << ". " << links[i]->getText() << endl;
 				choicecount++;
@@ -165,7 +166,7 @@ void Interpreter::run()
             int choice;
 			cin >> choice;
 			
-			while (!cin || choice < 1 || choice > choicecount)
+			while (!cin || choice < 1 || choice > choicecount) //takes user input for the passage they want to go to
 			{
 				cout << "Invalid Choice, Re-enter a number between 1 and " << choicecount << ": ";
 				cin.clear();
@@ -173,7 +174,7 @@ void Interpreter::run()
 				cin >> choice;
 			}
             
-			links[choice - 1]->execute(this);
+			links[choice - 1]->execute(this);//moves to the passage that the user selected
 			
         }
 
