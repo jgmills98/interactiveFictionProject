@@ -31,14 +31,11 @@ Interpreter::Interpreter(StoryTokenizer st)
 void Interpreter::run()
 {
     int finished = 0; //allows 1 more pass through once at the end of the game
+	
 
     while(finished == 0) //loops while through passages while remaining within bounds
     {
-        /*
-		if(passages[pos].getName() == passages[passages.size()-1].getName())
-            finished = 1;
-        */
-		
+       
 		hitLink = 0;
 		hitGoto = 0;
 		links.clear();
@@ -47,29 +44,67 @@ void Interpreter::run()
 
         PassageTokenizer ptok(passages[pos].getText()); //uses the passage vector for the tokenizer
 		
+		
         while(ptok.hasNextSection())
         {
+			
+			
+			SectionToken stok(ptok.nextSection());
+			
+			if (stok.getType() == IF || stok.getType() == ELSEIF || stok.getType() == ELSE)
+			{
+				string copy = stok.getText();
+				stok = ptok.nextSection();
+				Ifs ifs(copy, stok.getText());
+				ifBlocks.push(ifs);
 
-            SectionToken stok(ptok.nextSection());
+				stok = ptok.nextSection();
+				if (stok.getType() == ELSE || stok.getType() == ELSEIF)
+				{
+				
+					while (stok.getType() == ELSE || stok.getType() == ELSEIF)
+					{
+						copy = stok.getText();
 
-            if(stok.getType() == IF || stok.getType() == ELSEIF || stok.getType() == ELSE)
-            {
-                string copy = stok.getText();
-                stok = ptok.nextSection();
-                Ifs ifs(copy,stok.getText());
-                ifBlocks.push(ifs);
+						stok = ptok.nextSection();
 
-                stok = ptok.nextSection();
-                while(stok.getType() == ELSE || stok.getType() == ELSEIF)
-                {
-                    copy = stok.getText();
+						Ifs extra(copy, stok.getText());
+						ifBlocks.push(extra);
 
-                    stok = ptok.nextSection();
+					}
+				}
+				else
+				{
+					if (stok.getType() == SET)
+					{
+						Set st(stok.getText());
+						st.execute(this);
+					}
+					else if (stok.getType() == TEXT)
+					{
+						Text tx(stok.getText());
+						tx.execute(this);
+					}
+					else if (stok.getType() == LINK)
+					{
+						Link* link = new Link(stok.getText());
+						cout << link->getText();
+						links.push_back(link);
 
-                    Ifs extra(copy,stok.getText());
-                    ifBlocks.push(extra);
-                }
-                
+						hitLink = 1;
+					}
+					else if (stok.getType() == GOTO)
+					{
+						Goto gt(stok.getText());
+						gt.execute(this);
+						hitGoto = 1;
+						break;
+					}
+
+					if (hitGoto == 1)
+						break;
+				}
+
                 while(!ifBlocks.empty())
                 {
                     ifBlocks.front().execute(this);
