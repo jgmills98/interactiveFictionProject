@@ -2,7 +2,7 @@
 // #include <unordered_map>
 
 #include <queue>
-
+#include "interpreter.h"
 #include "storytokenizer.h"
 
 #include "block.h"
@@ -59,52 +59,19 @@ void Interpreter::run()
 				ifBlocks.push(ifs);
 
 				stok = ptok.nextSection();
-				if (stok.getType() == ELSE || stok.getType() == ELSEIF)
+			
+				while (stok.getType() == ELSE || stok.getType() == ELSEIF)
 				{
+					copy = stok.getText();
+
+					stok = ptok.nextSection();
+
+					Ifs extra(copy, stok.getText());						
+					ifBlocks.push(extra);
+
+				}
 				
-					while (stok.getType() == ELSE || stok.getType() == ELSEIF)
-					{
-						copy = stok.getText();
-
-						stok = ptok.nextSection();
-
-						Ifs extra(copy, stok.getText());
-						ifBlocks.push(extra);
-
-					}
-				}
-				else
-				{
-					if (stok.getType() == SET)
-					{
-						Set st(stok.getText());
-						st.execute(this);
-					}
-					else if (stok.getType() == TEXT)
-					{
-						Text tx(stok.getText());
-						tx.execute(this);
-					}
-					else if (stok.getType() == LINK)
-					{
-						Link* link = new Link(stok.getText());
-						cout << link->getText();
-						links.push_back(link);
-
-						hitLink = 1;
-					}
-					else if (stok.getType() == GOTO)
-					{
-						Goto gt(stok.getText());
-						gt.execute(this);
-						hitGoto = 1;
-						break;
-					}
-
-					if (hitGoto == 1)
-						break;
-				}
-
+				
                 while(!ifBlocks.empty())
                 {
                     ifBlocks.front().execute(this);
@@ -119,6 +86,38 @@ void Interpreter::run()
                         ifBlocks.pop();
                     }
                 }
+
+
+				if (stok.getType() == SET)
+				{
+					Set st(stok.getText());
+					st.execute(this);
+				}
+				else if (stok.getType() == TEXT)
+				{
+					Text tx(stok.getText());
+					tx.execute(this);
+				}
+				else if (stok.getType() == LINK)
+				{
+					Link* link = new Link(stok.getText());
+					cout << link->getText();
+					links.push_back(link);
+
+					hitLink = 1;
+				}
+				else if (stok.getType() == GOTO)
+				{
+					Goto gt(stok.getText());
+					gt.execute(this);
+					hitGoto = 1;
+					break;
+				}
+
+				if (hitGoto == 1)
+					break;
+
+
             }
             else if(stok.getType() == SET)
             {

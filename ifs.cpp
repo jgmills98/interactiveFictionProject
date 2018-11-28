@@ -65,16 +65,19 @@ void Ifs::execute(Interpreter* ins)
                 ifBlocks.push(ifs);
 
                 stok = ptok.nextSection();
-                while(stok.getType() == ELSE || stok.getType() == ELSEIF)
-                {
-                    copy = stok.getText();
+				
+				while (stok.getType() == ELSE || stok.getType() == ELSEIF)
+				{
+					copy = stok.getText();
 
-                    stok = ptok.nextSection();
+					stok = ptok.nextSection();
 
-                    Ifs extra(copy,stok.getText());
-                    ifBlocks.push(extra);
-                }
+					Ifs extra(copy, stok.getText());
+					ifBlocks.push(extra);
 
+				}
+				
+		
                 while(!ifBlocks.empty())
                 {
                     ifBlocks.front().execute(ins);
@@ -89,6 +92,36 @@ void Ifs::execute(Interpreter* ins)
                         ifBlocks.pop();
                     }
                 }
+
+				if (stok.getType() == SET)
+				{
+					Set st(stok.getText());
+					st.execute(ins);
+				}
+				else if (stok.getType() == TEXT)
+				{
+					Text tx(stok.getText());
+					tx.execute(ins);
+				}
+				else if (stok.getType() == LINK)
+				{
+					Link* link = new Link(stok.getText());
+					cout << link->getText();
+					ins->links.push_back(link);
+
+					ins->hitLink = 1;
+				}
+				else if (stok.getType() == GOTO)
+				{
+					Goto gt(stok.getText());
+					gt.execute(ins);
+					ins->hitGoto = 1;
+					break;
+				}
+
+				if (ins->hitGoto == 1)
+					break;
+
             }
            else if(stok.getType() == SET)
             {
