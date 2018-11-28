@@ -5,7 +5,6 @@
 #include "interpreter.h"
 #include "storytokenizer.h"
 
-#include "block.h"
 #include "goto.h"
 #include "ifs.h"
 #include "link.h"

@@ -1,7 +1,6 @@
 #include <string>
 #include <queue>
 
-#include "block.h"
 #include "goto.h"
 #include "ifs.h"
 #include "link.h"
