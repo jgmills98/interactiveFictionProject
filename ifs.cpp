@@ -40,7 +40,7 @@ Ifs::Ifs(string str,string str1)
 
 }
 
-void Ifs::execute(Interpreter* ins)
+void Ifs::execute(Interpreter* ins)//the if execute functions similarly to the interpreture run function because the if statement has its ok passage to tokenize
 {
    
     if(((ifType == IFE || ifType == ELSE_IFE) && ins->vars[varname] == value) || ifType == ELSEE)
