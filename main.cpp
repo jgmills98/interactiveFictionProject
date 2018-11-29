@@ -3,13 +3,7 @@
 #include <fstream>
 #include "storytokenizer.h"
 #include "interpreter.h"
-/*
-#include "set.h" //remove later, used to test constructors
-#include "section.h"
-#include "link.h"
-#include "ifs.h"
-#include "text.h"
-*/
+
 using namespace std;
 
 int main()
