@@ -20,14 +20,9 @@ class Interpreter
         vector<PassageToken> passages;
 		vector<Link*> links;
         Interpreter(StoryTokenizer st);
-        void run(string str);
-        void run(int index);
         void run();
 		int hitLink;
 		int hitGoto;
-        int findIndex(string name);
-        void updateVar(string name, bool val);
-        bool getVal(string name);
         int getPos() {return pos;};
         void setPos(int x) {pos = x;};
 

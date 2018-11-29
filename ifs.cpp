@@ -150,22 +150,6 @@ void Ifs::execute(Interpreter* ins)
             }
         }
     }
-    // else if(ifType == ELSEE)
-    // {
-    //     complete = 1;
-    //     PassageTokenizer ptok(statement);
-
-    //     while(ptok.hasNextSection())
-    //     {
-    //         SectionToken stok = ptok.nextSection();
-    //         if(stok.getType() == TEXT)
-    //         {
-    //             Text tx(stok.getText());
-    //             tx.execute(ins);
-    //         }
-    //     }
-    // }
-
 }
 
 string Ifs::getVar()
